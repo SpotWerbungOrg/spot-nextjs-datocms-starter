@@ -1,0 +1,78 @@
+.events__heading {
+  margin-block-end: var(--spacing-space-large);
+}
+
+/* Cards need more air than the grid gutter gives images: 32px between, 48px below. */
+.events {
+  column-gap: var(--spacing-space-extra-large);
+  row-gap: calc(var(--spacing-space-extra-large) * 1.5);
+}
+
+/* --bp-sm, --bp-lg: two up, then three up, on the twelve columns of the grid. */
+@media (min-width: 768px) {
+  .events > .event-card {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1024px) {
+  .events > .event-card {
+    grid-column: span 4;
+  }
+}
+
+/* In the carousel the card is a slide and declares its own width. */
+.carousel__track > .event-card {
+  flex-basis: min(24rem, 80%);
+}
+
+.event-card {
+  display: grid;
+  gap: var(--spacing-space-small);
+  position: relative;
+}
+
+.event-card > * {
+  margin: 0;
+}
+
+.event-card__image {
+  aspect-ratio: 3 / 2;
+  border-radius: var(--corner-radius-medium);
+  object-fit: cover;
+  width: 100%;
+}
+
+.event-card__meta {
+  color: var(--text-muted);
+  font-size: var(--font-size-text-small);
+}
+
+.event-card__title {
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+}
+
+/* The title is the link, the whole card is its hit area. */
+.event-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.event-card__link::after {
+  content: '';
+  inset: 0;
+  position: absolute;
+}
+
+.event-card__link:hover,
+.event-card__link:focus-visible {
+  text-decoration: underline;
+}
+
+.event-card__summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}

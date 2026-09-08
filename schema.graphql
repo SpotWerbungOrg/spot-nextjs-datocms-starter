@@ -234,6 +234,139 @@ scalar CustomData
 """A ISO 8601 compliant datetime value"""
 scalar DateTime
 
+input EventsFeedModelFilter {
+  _createdAt: CreatedAtFilter
+  id: ItemIdFilter
+  _firstPublishedAt: PublishedAtFilter
+  _publicationScheduledAt: PublishedAtFilter
+  _unpublishingScheduledAt: PublishedAtFilter
+  _publishedAt: PublishedAtFilter
+  _status: StatusFilter
+  _updatedAt: UpdatedAtFilter
+  _isValid: BooleanFilter
+  _locales: LocalesFilter
+  fieldMap: JsonFilter
+  itemsPath: StringFilter
+  linkBase: StringFilter
+  name: StringFilter
+  url: StringFilter
+  OR: [EventsFeedModelFilter]
+  AND: [EventsFeedModelFilter]
+}
+
+enum EventsFeedModelOrderBy {
+  _createdAt_ASC
+  _createdAt_DESC
+  id_ASC
+  id_DESC
+  _firstPublishedAt_ASC
+  _firstPublishedAt_DESC
+  _publicationScheduledAt_ASC
+  _publicationScheduledAt_DESC
+  _unpublishingScheduledAt_ASC
+  _unpublishingScheduledAt_DESC
+  _publishedAt_ASC
+  _publishedAt_DESC
+  _status_ASC
+  _status_DESC
+  _updatedAt_ASC
+  _updatedAt_DESC
+  _isValid_ASC
+  _isValid_DESC
+  itemsPath_ASC
+  itemsPath_DESC
+  linkBase_ASC
+  linkBase_DESC
+  name_ASC
+  name_DESC
+  url_ASC
+  url_DESC
+}
+
+"""Record of type 📅 Events feed (events_feed)"""
+type EventsFeedRecord implements RecordInterface {
+  _allLinkBaseLocales(
+    """
+    If you want to fallback to a default translation when a translation has not been found
+    """
+    fallbackLocales: [SiteLocale!]
+  ): [StringMultiLocaleField!]
+  _allUrlLocales(
+    """
+    If you want to fallback to a default translation when a translation has not been found
+    """
+    fallbackLocales: [SiteLocale!]
+  ): [StringMultiLocaleField!]
+  _createdAt: DateTime!
+
+  """Editing URL"""
+  _editingUrl: String
+  _firstPublishedAt: DateTime!
+  _isValid: BooleanType!
+  _locales: [SiteLocale!]!
+  _modelApiKey: String!
+  _publicationScheduledAt: DateTime
+  _publishedAt: DateTime!
+
+  """Generates SEO and Social card meta tags to be used in your frontend"""
+  _seoMetaTags(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+  ): [Tag!]!
+  _status: ItemStatus!
+  _unpublishingScheduledAt: DateTime
+  _updatedAt: DateTime!
+  fieldMap: JsonField!
+  id: ItemId!
+  itemsPath: String!
+  linkBase(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+
+    """
+    If you want to fallback to a default translation when a translation has not been found
+    """
+    fallbackLocales: [SiteLocale!]
+  ): String
+  name: String!
+  url(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+
+    """
+    If you want to fallback to a default translation when a translation has not been found
+    """
+    fallbackLocales: [SiteLocale!]
+  ): String
+}
+
+"""Block of type 📅 Events Section (events_section)"""
+type EventsSectionRecord implements RecordInterface {
+  _createdAt: DateTime!
+
+  """Editing URL"""
+  _editingUrl: String
+  _firstPublishedAt: DateTime!
+  _isValid: BooleanType!
+  _modelApiKey: String!
+  _publicationScheduledAt: DateTime
+  _publishedAt: DateTime!
+
+  """Generates SEO and Social card meta tags to be used in your frontend"""
+  _seoMetaTags(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+  ): [Tag!]!
+  _status: ItemStatus!
+  _unpublishingScheduledAt: DateTime
+  _updatedAt: DateTime!
+  feed: EventsFeedRecord!
+  heading: String
+  id: ItemId!
+  layout: String!
+  limit: IntType!
+}
+
 enum FaviconType {
   icon
   appleTouchIcon
@@ -2958,7 +3091,7 @@ enum PageModelOrderBy {
   title_DESC
 }
 
-union PageModelSectionsField = AccordionSectionRecord | HeroSectionRecord | ImageGridSectionRecord | ImageSectionRecord | ImageWithTextSectionRecord | SliderSectionRecord | TextSectionRecord
+union PageModelSectionsField = AccordionSectionRecord | EventsSectionRecord | HeroSectionRecord | ImageGridSectionRecord | ImageSectionRecord | ImageWithTextSectionRecord | SliderSectionRecord | TextSectionRecord
 
 type PageModelSectionsFieldListListNonNullMultiLocaleField {
   locale: SiteLocale
@@ -3078,6 +3211,13 @@ input PublishedAtFilter {
 """The query root for this schema"""
 type Query {
   """Returns meta information regarding a record collection"""
+  _allEventsFeedsMeta(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+    filter: EventsFeedModelFilter
+  ): CollectionMetadata!
+
+  """Returns meta information regarding a record collection"""
   _allPagesMeta(
     """The locale to use to fetch the field's content"""
     locale: SiteLocale
@@ -3108,6 +3248,25 @@ type Query {
     """
     fallbackLocales: [SiteLocale!]
   ): Site!
+
+  """Returns a collection of records"""
+  allEventsFeeds(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+
+    """
+    If you want to fallback to a default translation when a translation has not been found
+    """
+    fallbackLocales: [SiteLocale!]
+
+    """Skip the first results"""
+    skip: IntType
+
+    """Limit the number of results"""
+    first: IntType = 20
+    filter: EventsFeedModelFilter
+    orderBy: [EventsFeedModelOrderBy] = [_updatedAt_DESC]
+  ): [EventsFeedRecord!]!
 
   """Returns a collection of records"""
   allPages(
@@ -3165,6 +3324,19 @@ type Query {
     filter: UploadFilter
     orderBy: [UploadOrderBy] = [_createdAt_DESC]
   ): [FileField!]!
+
+  """Returns a specific record"""
+  eventsFeed(
+    """The locale to use to fetch the field's content"""
+    locale: SiteLocale
+
+    """
+    If you want to fallback to a default translation when a translation has not been found
+    """
+    fallbackLocales: [SiteLocale!]
+    filter: EventsFeedModelFilter
+    orderBy: [EventsFeedModelOrderBy] = [_updatedAt_DESC]
+  ): EventsFeedRecord
 
   """Returns the single instance record"""
   layout(

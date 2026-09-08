@@ -70,10 +70,17 @@ Three layers. Keep them apart in your head:
   interface wording and the privacy ids, and mounts SPOT's consent tool, which is also what
   starts Google Tag Manager once the visitor has accepted, so there is no GTM snippet
   anywhere in the code.
-- **Example content**: seven sections (hero, text, image with text, image, image grid,
-  slider, accordion) and three nested blocks (link, accordion item, menu item). The
+- **Example content**: eight sections (hero, text, image with text, image, image grid,
+  slider, accordion, events) and three nested blocks (link, accordion item, menu item). The
   **Abschnitte** page (`/abschnitte`, `/en/sections`) renders one of each. Copy one, then
   delete what the project does not use, in the CMS and in the code, that page included.
+  The events section reads an external API described in the CMS: an **Events feed** record
+  holds the URL per language, the path to the list in the response and a map from card
+  field (title, summary, date, location, image, url) to a path inside one event, plus an
+  optional link base for relative URLs. The section only picks a feed, a limit and a
+  layout. A new API is a new feed record, a renamed field is a map edit, no deploy either
+  way. Anything beyond "a string at a path" (auth, XML, date formatting, a new card field)
+  is code, in `src/lib/events/loadEvents.ts`.
 
 ## Conventions
 

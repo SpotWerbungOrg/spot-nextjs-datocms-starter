@@ -39,6 +39,57 @@ export const AccordionSection = {
   REF: { type: 'item_type', id: 'GHPlTJWYQL-RItt_mgAzYg' },
 } as const;
 
+export type EventsFeed = ItemTypeDefinition<
+  EnvironmentSettings,
+  'FcuSWWAnQ3-pOJjo3230zQ',
+  {
+    name: {
+      type: 'string';
+    };
+    url: {
+      type: 'string';
+      localized: true;
+    };
+    link_base: {
+      type: 'string';
+      localized: true;
+    };
+    items_path: {
+      type: 'string';
+    };
+    field_map: {
+      type: 'json';
+    };
+  }
+>;
+export const EventsFeed = {
+  ID: 'FcuSWWAnQ3-pOJjo3230zQ',
+  REF: { type: 'item_type', id: 'FcuSWWAnQ3-pOJjo3230zQ' },
+} as const;
+
+export type EventsSection = ItemTypeDefinition<
+  EnvironmentSettings,
+  'CaeEHYfTQtafzYySWECQyQ',
+  {
+    heading: {
+      type: 'string';
+    };
+    feed: {
+      type: 'link';
+    };
+    limit: {
+      type: 'integer';
+    };
+    layout: {
+      type: 'string';
+    };
+  }
+>;
+export const EventsSection = {
+  ID: 'CaeEHYfTQtafzYySWECQyQ',
+  REF: { type: 'item_type', id: 'CaeEHYfTQtafzYySWECQyQ' },
+} as const;
+
 export type HeroSection = ItemTypeDefinition<
   EnvironmentSettings,
   'KyTRgL91Te6FjX_2BeAg7g',
@@ -257,7 +308,8 @@ export type Page = ItemTypeDefinition<
         | ImageSection
         | ImageGridSection
         | SliderSection
-        | AccordionSection;
+        | AccordionSection
+        | EventsSection;
       localized: true;
     };
     seo_settings_social: {
@@ -367,6 +419,7 @@ export const VideoBlock = {
 export type AnyBlock =
   | AccordionItem
   | AccordionSection
+  | EventsSection
   | HeroSection
   | ImageBlock
   | ImageGalleryBlock
@@ -378,5 +431,5 @@ export type AnyBlock =
   | SliderSection
   | TextSection
   | VideoBlock;
-export type AnyModel = Layout | Page | SchemaMigration | SiteSetting;
+export type AnyModel = EventsFeed | Layout | Page | SchemaMigration | SiteSetting;
 export type AnyBlockOrModel = AnyBlock | AnyModel;

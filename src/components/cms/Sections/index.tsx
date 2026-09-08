@@ -1,5 +1,7 @@
 import AccordionSection from '@/components/sections/AccordionSection';
 import { AccordionSectionFragment } from '@/components/sections/AccordionSection/fragment';
+import EventsSection from '@/components/sections/EventsSection';
+import { EventsSectionFragment } from '@/components/sections/EventsSection/fragment';
 import HeroSection from '@/components/sections/HeroSection';
 import { HeroSectionFragment } from '@/components/sections/HeroSection/fragment';
 import ImageGridSection from '@/components/sections/ImageGridSection';
@@ -41,6 +43,7 @@ export const SectionsFragment = graphql(
       ...ImageGridSectionFragment
       ...SliderSectionFragment
       ...AccordionSectionFragment
+      ...EventsSectionFragment
     }
   `,
   [
@@ -51,6 +54,7 @@ export const SectionsFragment = graphql(
     ImageGridSectionFragment,
     SliderSectionFragment,
     AccordionSectionFragment,
+    EventsSectionFragment,
   ],
 );
 
@@ -80,6 +84,8 @@ export default function Sections({ data, locale }: Props) {
             return <SliderSection key={section.id} data={section} />;
           case 'AccordionSectionRecord':
             return <AccordionSection key={section.id} data={section} locale={locale} />;
+          case 'EventsSectionRecord':
+            return <EventsSection key={section.id} data={section} />;
           default: {
             /*
              * Exhaustiveness check: add a section to the fragment above without
